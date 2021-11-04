@@ -7,7 +7,7 @@ const db = require("./mongo");
 const app = express();
 const PORT = (process.env.PORT) ? (process.env.PORT) : 3001;
 
-const appService = require("./services/app.services");
+const appService = require("./app.services");
 
 
 (async function load() {
@@ -17,16 +17,16 @@ const appService = require("./services/app.services");
   app.use(cors()); 
 
   //user routes
-  app.get("/user", (req, res) => appService.getUsers(req, res));
+  app.get("/users", (req, res) => appService.getUsers(req, res));
   app.post("/create-user", (req, res) => appService.createUser(req, res));
-  app.post("users-booking-details", (req, res) => appService.getUsersBookingDetails(req, res));
+  app.get("/users-booking-details", (req, res) => appService.getUsersBookingDetails(req, res));
 
   //room routes
   app.get("/unoccupied-rooms", (req, res) => appService.getUnoccupiedRooms(req, res));
+  app.post("/create-room", (req, res) => appService.createRoom(req, res));
   app.post("/book-room", (req, res) => appService.bookRoom(req, res));
-  app.post("rooms-booking-details", (req, res) => appService.getRoomsBookingDetails(req, res));
+  app.get("/rooms-booking-details", (req, res) => appService.getRoomsBookingDetails(req, res));
   
-
   app.listen(PORT, () => {
     console.log(`Server running at port ${PORT}`);
   });
